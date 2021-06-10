@@ -52,6 +52,16 @@ async function getAllTags() {
     throw error;
   }
 }
+async function getAllLinks() {
+  try {
+    const { rows: links } = await client.query(`
+                                SELECT *
+                                FROM tags`);
+    return links;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // export
 module.exports = {
