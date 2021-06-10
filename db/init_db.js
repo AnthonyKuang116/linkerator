@@ -17,19 +17,19 @@ async function buildTables() {
     // build tables in correct order
     await client.query(
       `
-      CREATE TABLE links(
-        id serial PRIMARY KEY,
-        link VARCHAR(255) NOT NULL UNIQUE,
-        "clickCount" INTEGER ,
-        comment VARCHAR(255),
-        "dateShared" DATE,
-        "linkId" INTEGER REFERENCES Links(id) ON DELETE CASCADE
-      );
-        
-      CREATE TABLE tags (
-        id SERIAL PRIMARY KEY,
-        name varchar(255) NOT NULL UNIQUE
-      );
+        CREATE TABLE links(
+          id serial PRIMARY KEY,
+          link VARCHAR(255) NOT NULL UNIQUE,
+          "clickCount" INTEGER ,
+          comment VARCHAR(255),
+          "dateShared" DATE,
+          "linkId" INTEGER REFERENCES Links(id) ON DELETE CASCADE
+        );
+          
+        CREATE TABLE tags (
+          id SERIAL PRIMARY KEY,
+          name varchar(255) NOT NULL UNIQUE
+        );
       `
     )
 
