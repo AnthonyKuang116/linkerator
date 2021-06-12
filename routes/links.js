@@ -25,12 +25,12 @@ linksRouter.post('/links', async (req, res, next) => {
     const linkData = {};
 
     try {
-        //adding link, clickCount, comment, dateShared, and linkId to linkData object
+        //adding link, clickCount, comment, dateShared, and tagId to linkData object
         linkData.link = link;
         linkData.clickCount = clickCount;
         linkData.comment = comment;
         linkData.dateShared = dateShared;
-        linkData.linkId = setId;
+        linkData.tagId = setId;
 
         //creating link data
         const newLink = await createLink(linkData);

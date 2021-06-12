@@ -11,7 +11,7 @@ async function createLink({link, clickCount, comment, dateShared, linkId}) {
       rows: [links],
     } = await client.query(
       `
-      INSERT INTO links (link, "clickCount", comment, "dateShared", "linkId")
+      INSERT INTO links (link, "clickCount", comment, "dateShared", "tagId")
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
     `,

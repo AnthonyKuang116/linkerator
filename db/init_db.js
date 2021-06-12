@@ -28,7 +28,7 @@ async function buildTables() {
           "clickCount" INTEGER DEFAULT 0,
           comment VARCHAR(255),
           "dateShared" DATE DEFAULT CURRENT_DATE,
-          "linkId" INTEGER REFERENCES Links(id) ON DELETE CASCADE
+          "tagId" INTEGER REFERENCES tags(id) ON DELETE CASCADE
         );
           
         CREATE TABLE tags (
