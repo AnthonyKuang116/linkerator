@@ -1,17 +1,17 @@
 // Connect to DB
 const { Client } = require("pg");
-const DB_NAME = "linkerator-dev";
-const DB_URL = process.env.DATABASE_URL || `postgres://${DB_NAME}`;
+const DB_NAME = "boilerplate-dev";
+const DB_URL = process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
 const client = new Client(DB_URL);
 
 // database methods
-async function createLink(link, clickCount, comment, dateShared, linkId) {
+async function createLink({link, clickCount, comment, dateShared, linkId}) {
   try {
     const {
       rows: [links],
     } = await client.query(
       `
-      INSERT INTO links (link, "clickCount", comment, "dateShared", "linkId)
+      INSERT INTO links (link, "clickCount", comment, "dateShared", "linkId")
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
     `,

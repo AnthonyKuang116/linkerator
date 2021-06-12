@@ -7,7 +7,9 @@ const {
 
 async function buildTables() {
   try {
+    console.log("Connecting to client...")
     client.connect();
+    console.log("Client connected!")
 
     // drop tables in correct order
     console.log("Starting to drop tables...");
@@ -23,9 +25,9 @@ async function buildTables() {
         CREATE TABLE links(
           id serial PRIMARY KEY,
           link VARCHAR(255) NOT NULL UNIQUE,
-          "clickCount" INTEGER ,
+          "clickCount" INTEGER DEFAULT 0,
           comment VARCHAR(255),
-          "dateShared" DATE,
+          "dateShared" DATE DEFAULT CURRENT_DATE,
           "linkId" INTEGER REFERENCES Links(id) ON DELETE CASCADE
         );
           
