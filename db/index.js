@@ -1,6 +1,6 @@
 // Connect to DB
 const { Client } = require("pg");
-const DB_NAME = "change-this-name";
+const DB_NAME = "linkerator-dev";
 const DB_URL = process.env.DATABASE_URL || `postgres://${DB_NAME}`;
 const client = new Client(DB_URL);
 
@@ -18,6 +18,17 @@ async function createLink(link, clickCount, comment, dateShared, linkId) {
       [link, clickCount, comment, dateShared, linkId]
     );
 
+    return links;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getAllLinks() {
+  try {
+    const { rows: links } = await client.query(`
+      SELECT *
+      FROM links`);
     return links;
   } catch (error) {
     throw error;
@@ -52,19 +63,10 @@ async function getAllTags() {
     throw error;
   }
 }
-async function getAllLinks() {
-  try {
-    const { rows: links } = await client.query(`
-                                SELECT *
-                                FROM tags`);
-    return links;
-  } catch (error) {
-    throw error;
-  }
-}
 
 // export
 module.exports = {
   client,
-  // db methods
+  createLink,
+  getAllLinks,
 };

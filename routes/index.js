@@ -6,4 +6,14 @@ apiRouter.get("/", (req, res, next) => {
   });
 });
 
+/*
+**router pathways
+*/
+const linksRouter = require('./links');
+apiRouter.use('/links', linksRouter);
+
+apiRouter.use((error, req, res, next) => {
+  res.send(error);
+})
+
 module.exports = apiRouter;
