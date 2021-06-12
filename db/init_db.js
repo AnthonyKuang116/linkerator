@@ -1,8 +1,8 @@
 // code to build and initialize DB goes here
 const {
-  client
-  // other db methods 
-} = require('./index');
+  client,
+  // other db methods
+} = require("./index");
 
 async function buildTables() {
   try {
@@ -12,7 +12,7 @@ async function buildTables() {
     await client.query(`
       DROP TABLE IF EXISTS tags;
       DROP TABLE IF EXISTS links;
-    `)
+    `);
 
     // build tables in correct order
     await client.query(
@@ -23,7 +23,7 @@ async function buildTables() {
           "clickCount" INTEGER ,
           comment VARCHAR(255),
           "dateShared" DATE,
-          "linkId" INTEGER REFERENCES Links(id) ON DELETE CASCADE
+          "tagId" INTEGER REFERENCES tags(id) ON DELETE CASCADE
         );
           
         CREATE TABLE tags (
@@ -31,8 +31,7 @@ async function buildTables() {
           name varchar(255) NOT NULL UNIQUE
         );
       `
-    )
-
+    );
   } catch (error) {
     throw error;
   }

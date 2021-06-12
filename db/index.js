@@ -3,19 +3,19 @@ const { Client } = require("pg");
 const DB_NAME = "change-this-name";
 const DB_URL = process.env.DATABASE_URL || `postgres://${DB_NAME}`;
 const client = new Client(DB_URL);
-
+const tagArrayToObject = require("./tagArrayToObject");
 // database methods
-async function createLink(link, clickCount, comment, dateShared, linkId) {
+async function createLink(link, clickCount, comment, dateShared, tagId) {
   try {
     const {
       rows: [links],
     } = await client.query(
       `
-      INSERT INTO links (link, "clickCount", comment, "dateShared", "linkId)
+      INSERT INTO links (link, "clickCount", comment, "dateShared", "tagId")
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
     `,
-      [link, clickCount, comment, dateShared, linkId]
+      [link, clickCount, comment, dateShared, tagId]
     );
 
     return links;
@@ -24,13 +24,13 @@ async function createLink(link, clickCount, comment, dateShared, linkId) {
   }
 }
 
-async function createTag(name) {
+async function createLink(name) {
   try {
     const {
       rows: [tag],
     } = await client.query(
       `
-      INSERT INTO tags (name)
+      INSERT INTO links (name)
       VALUES ($1)
       RETURNING *;
     `,
@@ -46,8 +46,10 @@ async function createTag(name) {
 async function getAllTags() {
   try {
     const { rows: tags } = await client.query(`
-    SELECT *
-    FROM tags`);
+    SELECT a.id , a.name 'tagName',b.id 'linkId',b.link, b."clickCount",b.comment,b.dateShared
+                                FROM tags a LEFT JOIN links b on a."id"=b."tagId"`);
+
+    return tagArrayToObject(tags);
   } catch (error) {
     throw error;
   }
@@ -55,8 +57,10 @@ async function getAllTags() {
 async function getAllLinks() {
   try {
     const { rows: links } = await client.query(`
-                                SELECT *
-                                FROM tags`);
+                        SELECT *
+                        FROM links
+                                `);
+
     return links;
   } catch (error) {
     throw error;
