@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-export async function getSomething() {
+const BASE = 'https://localhost:3000'
+
+export async function getLink() {
   try {
-    const { data } = await axios.get('/api');
+    const { data } = await axios.get(`${BASE}/links`);
     return data;
   } catch (error) {
     throw error;

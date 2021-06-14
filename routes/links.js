@@ -18,7 +18,7 @@ linksRouter.get('/', async (req, res, next) => {
     }
 });
 
-linksRouter.post('/links', async (req, res, next) => {
+linksRouter.post('/create', async (req, res, next) => {
     const {link, clickCount, comment, dateShared} = req.body;
     const linkDetails = req.user;
     const { setId } = linkDetails.id;
