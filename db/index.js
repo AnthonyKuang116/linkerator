@@ -40,8 +40,8 @@ async function getLink(linkId) {
   try {
     const { rows: [link] } = await client.query(`
     SELECT * FROM links
-    WHERE id=${linkId};
-    `)
+    WHERE id=$1;
+    `, [linkId])
     return link;
   } catch (error) {
     throw error;
