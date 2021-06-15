@@ -1,7 +1,7 @@
 const express = require('express');
 const linksRouter = express.Router();
 
-const {createLink, getAllLinks} = require('../db');
+const {createLink, getAllLinks, getLink} = require('../db');
 
 linksRouter.use((req, res, next) => {
     console.log("A request is being made to /links");
@@ -18,7 +18,18 @@ linksRouter.get('/', async (req, res, next) => {
     }
 });
 
-linksRouter.post('/links', async (req, res, next) => {
+linksRouter.get('/:linkId', async (req, res, next) => {
+    const {linkId} = req.params; 
+    console.log(linkId)
+    try {
+        const link = await getLink(linkId);
+        res.send({link})
+    } catch ({name, message}) {
+        next({name, message});
+    }
+})
+
+linksRouter.post('/', async (req, res, next) => {
     const {link, clickCount, comment, dateShared} = req.body;
     const linkDetails = req.user;
     const { setId } = linkDetails.id;

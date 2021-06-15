@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-routerdom';
 
 import {
-  getSomething
+  getLinks
 } from '../api';
 
 const App = () => {
   const [message, setMessage] = useState('');
+  const [link, setLink] = useState([]);
 
   useEffect(() => {
-    getSomething()
+    getLinks()
       .then(response => {
         setMessage(response.message);
       })
