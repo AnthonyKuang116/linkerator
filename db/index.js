@@ -1,9 +1,10 @@
 // Connect to DB
 const { Client } = require("pg");
 const DB_NAME = "boilerplate-dev";
-const DB_URL = process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
+const DB_URL =
+  process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
 const client = new Client(DB_URL);
-const tagArrayToObject = require('./tagArrayToObject')
+const tagArrayToObject = require("./tagArrayToObject");
 
 // database methods
 async function createLink({ link, clickCount, comment, dateShared, tagId }) {
@@ -38,10 +39,15 @@ async function getAllLinks() {
 
 async function getLink(linkId) {
   try {
-    const { rows: [link] } = await client.query(`
+    const {
+      rows: [link],
+    } = await client.query(
+      `
     SELECT * FROM links
     WHERE id=$1;
-    `, [linkId])
+    `,
+      [linkId]
+    );
     return link;
   } catch (error) {
     throw error;
@@ -61,6 +67,7 @@ async function createTag(name) {
       [name]
     );
 
+    console.log(tag);
     return tag;
   } catch (error) {
     throw error;
@@ -70,11 +77,31 @@ async function createTag(name) {
 async function getAllTags() {
   try {
     const { rows: tags } = await client.query(`
-      SELECT a.id , a.name 'tagName', b.id 'linkId',b.link, b."clickCount",b.comment,b.dateShared
+      SELECT a.id , a.name "tagName", b.id "linkId",b.link, b."clickCount",b.comment,b."dateShared"
       FROM tags a LEFT JOIN links b on a."id"=b."tagId"`);
     return tagArrayToObject(tags);
   } catch (error) {
     throw error;
+  }
+}
+
+async function getLinksByTagName({ tagname: name }) {
+  try {
+    console.log(name, "-----------");
+    const { rows: tags } = await client.query(
+      `
+
+    SELECT a.id, a.name, b.id "linkId", b.link,b."clickCount",b.comment,b."dateShared"
+    FROM tags a JOIN links b ON a.id=b."tagId"
+    WHERE a.name=$1
+    `,
+      [name]
+    );
+
+    const tagsObject = tagArrayToObject(tags);
+    return tagsObject;
+  } catch (error) {
+    return error;
   }
 }
 
@@ -84,6 +111,7 @@ module.exports = {
   createLink,
   createTag,
   getAllLinks,
+  getAllTags,
+  getLinksByTagName,
   getLink,
-  getAllTags
 };
