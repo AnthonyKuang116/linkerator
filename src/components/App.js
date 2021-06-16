@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-routerdom';
-
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react";
 import {
-  getLinks
-} from '../api';
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+
+import { getLinks } from "../api";
 
 const App = () => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [link, setLink] = useState([]);
 
   useEffect(() => {
     getLinks()
-      .then(response => {
+      .then((response) => {
         setMessage(response.message);
       })
-      .catch(error => {
+      .catch((error) => {
         setMessage(error.message);
       });
   });
@@ -23,9 +26,9 @@ const App = () => {
   return (
     <div className="App">
       <h1>Hello, World!</h1>
-      <h2>{ message }</h2>
+      <h2>{message}</h2>
     </div>
   );
-}
+};
 
 export default App;
