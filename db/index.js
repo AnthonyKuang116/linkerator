@@ -22,6 +22,7 @@ async function createLink({ link, comment}) {
 
     return links;
   } catch (error) {
+    console.error("createLink", error);
     throw error;
   }
 }
@@ -33,6 +34,7 @@ async function getAllLinks() {
       FROM links`);
     return links;
   } catch (error) {
+    console.error("getAllLinks", error);
     throw error;
   }
 }
@@ -50,6 +52,7 @@ async function getLink(linkId) {
     );
     return link;
   } catch (error) {
+    console.error("getLink", error);
     throw error;
   }
 }
@@ -63,6 +66,7 @@ async function deleteLink(linkId) {
 
     return getAllLinks();
   } catch (error) {
+    console.error("deleteLink", error);
     throw error;
   }
 }
@@ -77,6 +81,7 @@ async function updateLink(linkId) {
 
     return await getAllLinks();
   } catch (error) {
+    console.error("updateLink", error);
     throw error;
   }
 }
@@ -97,6 +102,7 @@ async function createTag(name) {
     console.log(tag);
     return tag;
   } catch (error) {
+    console.error("createTag", error);
     throw error;
   }
 }
@@ -127,6 +133,7 @@ async function getAllTags() {
       FROM tags a LEFT JOIN links b on a."id"=b."tagId"`);
     return tagArrayToObject(tags);
   } catch (error) {
+    console.error("getAllTags", error);
     throw error;
   }
 }
@@ -147,7 +154,8 @@ async function getLinksByTagName({ tagname: name }) {
     const tagsObject = tagArrayToObject(tags);
     return tagsObject;
   } catch (error) {
-    return error;
+    console.error("getLinksByTagName", error);
+    throw error;
   }
 }
 
