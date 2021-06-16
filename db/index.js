@@ -67,7 +67,6 @@ async function createTag(name) {
       [name]
     );
 
-    console.log(tag);
     return tag;
   } catch (error) {
     throw error;
@@ -87,7 +86,6 @@ async function getAllTags() {
 
 async function getLinksByTagName({ tagname: name }) {
   try {
-    console.log(name, "-----------");
     const { rows: tags } = await client.query(
       `
 
