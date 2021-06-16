@@ -1,7 +1,7 @@
 const express = require('express');
 const linksRouter = express.Router();
 
-const {createLink, getAllLinks, getLink} = require('../db');
+const {createLink, getAllLinks, getLink, deleteLink, updateLink, findOrCreateTag} = require('../db');
 
 linksRouter.use((req, res, next) => {
     console.log("A request is being made to /links");
@@ -30,21 +30,17 @@ linksRouter.get('/:linkId', async (req, res, next) => {
 })
 
 linksRouter.post('/', async (req, res, next) => {
-    const {link, clickCount, comment, dateShared} = req.body;
-    const linkDetails = req.user;
-    const { setId } = linkDetails.id;
-    const linkData = {};
-
+    const {link, comment, tags = []} = req.body;
+    console.log(req.body)
     try {
-        //adding link, clickCount, comment, dateShared, and tagId to linkData object
-        linkData.link = link;
-        linkData.clickCount = clickCount;
-        linkData.comment = comment;
-        linkData.dateShared = dateShared;
-        linkData.tagId = setId;
-
         //creating link data
-        const newLink = await createLink(linkData);
+        const newLink = await createLink({link, comment});
+
+        // const tagPromises = tags.map(name => findOrCreateTag(name));
+        // const tagObjects = await Promise.all(tagPromises);
+
+        // //Associates tags with link 
+        // newLink.tags = tagObjects;
 
         res.send({newLink});
 
@@ -52,5 +48,25 @@ linksRouter.post('/', async (req, res, next) => {
         next({name, message});
     }
 });
+
+linksRouter.delete('/:linkId', async (req, res, next) => {
+    const {linkId} = req.params;
+    try {
+        const removeLink = await deleteLink(linkId)
+        res.send({removeLink})
+    } catch ({name, message}) {
+        next({name, message});
+    }
+})
+
+linksRouter.patch('/:linkId', async (req, res, next) => {
+    const {linkId} = req.params;
+    try {
+        const update = await updateLink(linkId)
+        res.send({update})
+    } catch ({name, message}) {
+        next({name, message});
+    }
+})
 
 module.exports = linksRouter;
