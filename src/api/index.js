@@ -1,10 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
+import GetTags from "./getTags";
 
-const BASE = 'https://localhost:5000'
+const BASE = "https://localhost:5000";
 
 export async function getLinks() {
   try {
-    const { data } = await axios.get(`${BASE}/api/links`);
+    const { data } = await axios.get(`api/links`);
+
     return data;
   } catch (error) {
     throw error;
@@ -13,9 +15,13 @@ export async function getLinks() {
 
 export async function getLinkById(linkId) {
   try {
-    const { data } = await axios.get(`${BASE}/api/links/${linkId}`)
+    const { data } = await axios.get(`api/links/${linkId}`);
     return data;
   } catch (error) {
     throw error;
   }
 }
+
+export { default as createTag } from "./createTag";
+export { default as getTags } from "./getTags";
+export { default as createLink } from "./createLink";
