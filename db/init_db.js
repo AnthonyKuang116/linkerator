@@ -4,7 +4,6 @@ const {
   createLink,
   getAllLinks,
   createTag,
-  getAllTags
 } = require('./index');
 
 async function buildTables() {
@@ -34,8 +33,14 @@ async function buildTables() {
           link VARCHAR(255) NOT NULL UNIQUE,
           "clickCount" INTEGER DEFAULT 0,
           comment VARCHAR(255),
-          "dateShared" DATE DEFAULT CURRENT_DATE,
-          "tagId" INTEGER REFERENCES tags(id) ON DELETE CASCADE
+          "dateShared" DATE DEFAULT CURRENT_DATE
+        );
+
+        CREATE TABLE link_tags(
+          id serial PRIMARY KEY,
+          "linkId" SERIAL REFERENCES links(id),
+          "tagId" SERIAL REFERENCES tags(id),
+          UNIQUE("linkId", "tagId")
         );
 
       `
