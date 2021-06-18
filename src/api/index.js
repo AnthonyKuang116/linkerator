@@ -27,3 +27,5 @@ export { default as createTag } from "./createTag";
 export { default as getTags } from "./getTags";
 export { default as createLink } from "./createLink";
 export { default as deleteLink} from "./deleteLink";
+export { default as goToLink} from "./goToLink";
+export { default as linkCount} from "./linkCount";

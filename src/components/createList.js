@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { DataGrid } from '@material-ui/data-grid';
 import { Button } from "@material-ui/core";
 
-import { deleteLink } from '../api';
+import { deleteLink, goToLink, linkCount } from '../api';
 
 const CreateList = ({ links }) => {
     const [select, setSelect] = useState([]);
@@ -26,15 +26,36 @@ const CreateList = ({ links }) => {
 
     const deleteHandle = async () => {
         try {
-            deleteLink(select)
+            await deleteLink(select)
         } catch (error) {
             console.error("Could not delete link data", error);
+            throw error;
+        }
+    }
+
+    const goToSiteHandle = async () => {
+        try {
+
+            const link = await goToLink(select);
+            console.log(link)
+            const url = link.data.link.link; //pulls the URL off the object
+            if (url.startsWith('https://') || url.startsWith('http://')){
+                window.open(url); //opens the clicked button/link in new window
+            }
+            const newLink = 'https://' + url
+            window.open(newLink)
+            console.log(newLink)
+
+            await linkCount(select); //updates count when site is vistied
+
+        } catch (error) {
+            console.error("Could not go to this site!", error);
         }
     }
 
     const handleGrabId = async (event) => {
         try {
-            setSelect(event.selectionModel);
+            await setSelect(event.selectionModel);
         } catch (error) {
             console.error("Could not grab ID", error);
             throw error;
@@ -43,9 +64,18 @@ const CreateList = ({ links }) => {
 
     return (
         <div className="mainList" style={{ width: 1000 }}>
-            <DataGrid rows={rows} columns={columns} onSelectionModelChange={handleGrabId} />
+            <DataGrid rows={rows} columns={columns} onSelectionModelChange={handleGrabId} pageSize={10} sortModel={[{field: 'clickCount', sort: 'desc'}]}/>
             <Button variant="contained"
                 color="primary"
+                style={{
+                    height: "50px",
+                    margin: "10px 0",
+                    width: "50%",
+                    alignSelf: "center",
+                }}
+                onClick={goToSiteHandle}>Go to Site</Button>
+            <Button variant="contained"
+                color="secondary"
                 style={{
                     height: "50px",
                     margin: "10px 0",

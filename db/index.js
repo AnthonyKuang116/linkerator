@@ -45,7 +45,7 @@ async function getLink(linkId) {
       rows: [link],
     } = await client.query(
       `
-    SELECT * FROM links
+    SELECT link FROM links
     WHERE id=$1;
     `,
       [linkId]
@@ -73,13 +73,13 @@ async function deleteLink(linkId) {
 
 async function updateLink(linkId) {
   try {
-    await client.query(`
+    const { rows: [link] } = await client.query(`
       UPDATE links
       SET "clickCount" = links."clickCount" + 1
       WHERE id=$1;
     `, [linkId])
 
-    return await getAllLinks();
+    return link;
   } catch (error) {
     console.error("updateLink", error);
     throw error;
