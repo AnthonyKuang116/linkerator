@@ -55,17 +55,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    getLinks()
-      .then(({ allLinks }) => {
-        setLinks(allLinks);
-        message('')
-      })
-      .catch((error) => {
-        setMessage(error.message);
-      });
-  }, []);
-
-  useEffect(() => {
     getTags()
       .then((tagsArray) => {
         setTags(tagsArray);

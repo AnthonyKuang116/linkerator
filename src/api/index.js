@@ -1,7 +1,7 @@
 import axios from "axios";
 import GetTags from "./getTags";
 
-const BASE = "https://localhost:5000";
+const BASE = "localhost:5000";
 
 export async function getLinks() {
   try {
@@ -22,6 +22,8 @@ export async function getLinkById(linkId) {
   }
 }
 
+
 export { default as createTag } from "./createTag";
 export { default as getTags } from "./getTags";
 export { default as createLink } from "./createLink";
+export { default as deleteLink} from "./deleteLink";

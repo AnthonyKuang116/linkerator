@@ -64,7 +64,7 @@ async function deleteLink(linkId) {
       where id=$1;
     `, [linkId])
 
-    return getAllLinks();
+    return link;
   } catch (error) {
     console.error("deleteLink", error);
     throw error;
