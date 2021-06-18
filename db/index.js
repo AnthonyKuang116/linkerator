@@ -9,7 +9,6 @@ const tagArrayToObject = require("./tagArrayToObject");
 // database methods
 async function createLink({ link, comment}) {
   try {
-    console.log({ link, clickCount, comment, dateShared, tagId });
     const {
       rows: [links],
     } = await client.query(

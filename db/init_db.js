@@ -62,7 +62,7 @@ async function populateInitialData() {
     const tag3 = await createTag("Third tag")
     const firstLink = await createLink({link: 'https://youtube.com', clickCount: '123', comment: 'Best video site', dateShared: 'June 10, 2021', tagId: tag1.id})
     const secondLink = await createLink({link: 'https://google.com', clickCount: '987', comment: 'Most used search engine', dateShared: 'June 11, 2021', tagId : tag2.id})
-    const thirdLink = await createLink({link: '//https://github.com', clickCount:'5', comment: 'Share projects here', dateShared: 'June 12, 2021', tagId: tag3.id})
+    const thirdLink = await createLink({link: 'https://github.com', clickCount:'5', comment: 'Share projects here', dateShared: 'June 12, 2021', tagId: tag3.id})
 
     console.log(firstLink, secondLink, thirdLink);
     console.log("Finished creating links!");

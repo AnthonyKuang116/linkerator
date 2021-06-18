@@ -10,7 +10,7 @@ import { getLinks, getTags } from "../api";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
-import { CreateTag, CreateLink } from "./";
+import { CreateTag, CreateLink, CreateList } from "./";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,6 +47,18 @@ const App = () => {
     getLinks()
       .then(({ allLinks }) => {
         setLinks(allLinks);
+        message('')
+      })
+      .catch((error) => {
+        setMessage(error.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    getLinks()
+      .then(({ allLinks }) => {
+        setLinks(allLinks);
+        message('')
       })
       .catch((error) => {
         setMessage(error.message);
@@ -64,11 +76,14 @@ const App = () => {
   }, []);
 
   return (
-    <div className={classes.container}>
-      <Paper className={classes.mainPaper} elevation={3}>
+    <div className={classes.container} style={{display: 'flex', flexDirection: 'center'}}>
+      <Paper className={classes.mainPaper} elevation={3} style={{height: 500}}>
         <CreateTag />
         <CreateLink tags={tags} />
       </Paper>
+      <CreateList links={links}/>
+
+
     </div>
   );
 };
