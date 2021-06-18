@@ -7,9 +7,8 @@ const client = new Client(DB_URL);
 const tagArrayToObject = require("./tagArrayToObject");
 
 // database methods
-async function createLink({ link, comment}) {
+async function createLink({ link, comment }) {
   try {
-    console.log({ link, clickCount, comment, dateShared, tagId });
     const {
       rows: [links],
     } = await client.query(
@@ -60,10 +59,15 @@ async function getLink(linkId) {
 
 async function deleteLink(linkId) {
   try {
-    const { rows: [link] } = await client.query(`
+    const {
+      rows: [link],
+    } = await client.query(
+      `
       DELETE FROM links
       where id=$1;
-    `, [linkId])
+    `,
+      [linkId]
+    );
 
     return getAllLinks();
   } catch (error) {
@@ -74,11 +78,14 @@ async function deleteLink(linkId) {
 
 async function updateLink(linkId) {
   try {
-    await client.query(`
+    await client.query(
+      `
       UPDATE links
       SET "clickCount" = links."clickCount" + 1
       WHERE id=$1;
-    `, [linkId])
+    `,
+      [linkId]
+    );
 
     return await getAllLinks();
   } catch (error) {
@@ -109,17 +116,21 @@ async function createTag(name) {
 
 async function findOrCreateTag(name) {
   try {
-    const { rows: [tag] } = await client.query(`
+    const {
+      rows: [tag],
+    } = await client.query(
+      `
       SELECT * FROM tags
       WHERE name=$1;
-    `, [name])
+    `,
+      [name]
+    );
 
-    if(tag){
+    if (tag) {
       return tag;
     }
 
     return createTag(name);
-
   } catch (error) {
     console.error("findOrCreateTag", error);
     throw error;
@@ -156,6 +167,16 @@ async function getLinksByTagName({ tagname: name }) {
     console.error("getLinksByTagName", error);
     throw error;
   }
+
+  async function createLinkTags(linkid, tagid) {
+    try {
+      `INSERT INTO link_tags(linkid,tagid)
+       VALUES ($1,$2)
+       RETURNING * ;`;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 // export
@@ -169,5 +190,5 @@ module.exports = {
   getAllTags,
   getLinksByTagName,
   getLink,
-  updateLink
+  updateLink,
 };

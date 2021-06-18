@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     gridRow: "2/3",
     margin: theme.spacing(1),
     width: "90%",
-    height: "20rem",
+    minHeight: "20rem",
     display: "flex",
     flexFlow: "column nowrap",
     border: "2px solid #d4a373ff",
@@ -83,6 +83,22 @@ const CreateLink = ({ tags }) => {
         Create a new Link:
       </Typography>
 
+      <TextField
+        className={classes.textField}
+        id="standard-basic"
+        label="Link"
+        onChange={handleLinkChange}
+        value={link}
+      />
+
+      <TextField
+        className={classes.textField}
+        id="standard-basic"
+        label="Link Comment"
+        onChange={handCommentChange}
+        value={comment}
+      />
+
       <Autocomplete
         multiple
         id="tags-standard"
@@ -103,22 +119,6 @@ const CreateLink = ({ tags }) => {
           />
         )}
       />
-      <TextField
-        className={classes.textField}
-        id="standard-basic"
-        label="Link"
-        onChange={handleLinkChange}
-        value={link}
-      />
-
-      <TextField
-        className={classes.textField}
-        id="standard-basic"
-        label="Link Comment"
-        onChange={handCommentChange}
-        value={comment}
-      />
-
       <Button
         variant="contained"
         color="primary"

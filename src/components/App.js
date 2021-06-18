@@ -45,8 +45,9 @@ const App = () => {
 
   useEffect(() => {
     getLinks()
-      .then(({ allLinks }) => {
-        setLinks(allLinks);
+      .then((response) => {
+        console.log(response);
+        setLinks(response.allLinks);
       })
       .catch((error) => {
         setMessage(error.message);
@@ -66,7 +67,7 @@ const App = () => {
   return (
     <div className={classes.container}>
       <Paper className={classes.mainPaper} elevation={3}>
-        <CreateTag />
+        <CreateTag setTags={setTags} />
         <CreateLink tags={tags} />
       </Paper>
     </div>
