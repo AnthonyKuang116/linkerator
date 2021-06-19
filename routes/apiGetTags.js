@@ -6,8 +6,7 @@ const apiGetTags = async (req, res, next) => {
 
     res.send(tags);
   } catch (error) {
-    console.log(error);
-    return error;
+    next(error);
   }
 };
 

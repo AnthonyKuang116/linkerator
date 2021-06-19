@@ -1,5 +1,11 @@
 // code to build and initialize DB goes here
-const { client, createLink, getAllLinks, createTag } = require("./index");
+const {
+  client,
+  createLink,
+  getAllLinks,
+  createTag,
+  createLinktags,
+} = require("./index");
 
 async function buildTables() {
   try {
@@ -75,6 +81,10 @@ async function populateInitialData() {
       dateShared: "June 12, 2021",
       //tagId: tag3.id,
     });
+
+    createLinktags(firstLink.id, tag1.id);
+    createLinktags(secondLink.id, tag2.id);
+    createLinktags(thirdLink.id, tag3.id);
 
     console.log(firstLink, secondLink, thirdLink);
     console.log("Finished creating links!");
