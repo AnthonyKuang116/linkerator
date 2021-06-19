@@ -1,8 +1,6 @@
 import axios from "axios";
 import GetTags from "./getTags";
 
-const BASE = "localhost:5000";
-
 export async function getLinks() {
   try {
     const { data } = await axios.get(`api/links`);

@@ -63,8 +63,8 @@ const CreateList = ({ links }) => {
     }
 
     return (
-        <div className="mainList" style={{ width: "100%", height: 350, gridColumn: "2/10", marginTop: 20}}>
-            <DataGrid rows={rows} columns={columns} onSelectionModelChange={handleGrabId} pageSize={10} sortModel={[{field: 'clickCount', sort: 'desc'}]}/>
+        <div className="mainList" style={{ width: "100%", height: 455, gridColumn: "2/10", gridRow: "2/3", marginTop: 20}}>
+            <DataGrid rows={rows} columns={columns} onSelectionModelChange={handleGrabId} pageSize={7} sortModel={[{field: 'clickCount', sort: 'desc'}]}/>
             <Button variant="contained"
                 color="primary"
                 style={{

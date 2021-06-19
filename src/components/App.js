@@ -10,13 +10,13 @@ import { getLinks, getTags } from "../api";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
-import { CreateTag, CreateLink, CreateList } from "./";
+import { CreateTag, CreateLink, CreateList, SearchBarValue } from "./";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "grid",
     gridTemplateColumns: "repeat(10, 1fr)",
-    gridTemplateRows: "repeat(2, 500px)",
+    gridTemplateRows: "200px, 700px, 500px, 300px",
   },
   mainPaper: {
     width: "70%",
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     gridRow: "1/-1",
     display: "grid",
     gridTemplateColumns: "repeat(10, 1fr)",
-    gridTemplateRows: "repeat(2, 470px)",
+    gridTemplateRows: "200px, 700px, 500px, 300px",
     backgroundColor: "#faedcdff",
     // "& > *": {
     //   margin: theme.spacing(1),
@@ -67,9 +67,10 @@ const App = () => {
   return (
     <div className={classes.container} style={{display: 'flex', flexDirection: 'column'}}>
       <Paper className={classes.mainPaper} elevation={3} style={{height: '100%'}}>
+        <SearchBarValue links={links} />
+        <CreateList links={links} />
         <CreateTag />
         <CreateLink tags={tags} />
-        <CreateList links={links} />
       </Paper>
 
 

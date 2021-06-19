@@ -17,10 +17,12 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/data-grid": "^4.0.0-alpha.31",
+    "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
     "axios": "^0.19.2",
     "express": "^4.17.1",
+    "material-ui-search-bar": "^1.0.0",
     "morgan": "^1.10.0",
     "pg": "^8.6.0",
     "react": "^16.14.0",

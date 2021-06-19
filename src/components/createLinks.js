@@ -15,8 +15,9 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 const useStyles = makeStyles((theme) => ({
   form: {
     gridColumn: "6/10",
-    gridRow: "2/3",
+    gridRow: "3/4",
     margin: theme.spacing(1),
+    marginTop: "80px",
     width: "90%",
     height: "300px",
     display: "flex",
