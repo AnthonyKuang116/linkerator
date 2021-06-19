@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     gridRow: "2/3",
     margin: theme.spacing(1),
     width: "90%",
-    height: "20rem",
+    height: "300px",
     display: "flex",
     flexFlow: "column nowrap",
     border: "2px solid #d4a373ff",

@@ -12,7 +12,7 @@ const CreateList = ({ links }) => {
         { field: "id", headerName: "ID", width: 110, hide: true },
         { field: "link", headerName: "Link", width: 200 },
         { field: "clickCount", headerName: "Click Count", width: 150 },
-        { field: "comment", headerName: "Comment", width: 150 },
+        { field: "comment", headerName: "Comment", width: 275 },
         { field: "tagId", headerName: "Tags", width: 150 },
         { field: "dateShared", headerName: "Date Shared", width: 200 }
     ];
@@ -63,7 +63,7 @@ const CreateList = ({ links }) => {
     }
 
     return (
-        <div className="mainList" style={{ width: 1000 }}>
+        <div className="mainList" style={{ width: "100%", height: 350, gridColumn: "2/10", marginTop: 20}}>
             <DataGrid rows={rows} columns={columns} onSelectionModelChange={handleGrabId} pageSize={10} sortModel={[{field: 'clickCount', sort: 'desc'}]}/>
             <Button variant="contained"
                 color="primary"

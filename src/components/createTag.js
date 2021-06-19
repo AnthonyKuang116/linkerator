@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     gridRow: "2/3",
     margin: theme.spacing(1),
     width: "90%",
-    height: "8rem",
+    height: "300px",
     display: "flex",
     flexFlow: "column nowrap",
     border: "2px solid #d4a373ff",
@@ -84,6 +84,7 @@ const CreateTag = () => {
       className={classes.form}
       noValidate
       autoComplete="off"
+      style={{gridColumn: "2/6"}}
     >
       <Typography variant="h5" gutterBottom>
         Create New Tag:

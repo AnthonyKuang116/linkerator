@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "grid",
     gridTemplateColumns: "repeat(10, 1fr)",
-    gridTemplateRows: "repeat(10, 1fr)",
+    gridTemplateRows: "repeat(2, 500px)",
   },
   mainPaper: {
     width: "70%",
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     gridRow: "1/-1",
     display: "grid",
     gridTemplateColumns: "repeat(10, 1fr)",
-    gridTemplateRows: "repeat(10, 1fr)",
+    gridTemplateRows: "repeat(2, 470px)",
     backgroundColor: "#faedcdff",
     // "& > *": {
     //   margin: theme.spacing(1),
@@ -65,12 +65,13 @@ const App = () => {
   }, []);
 
   return (
-    <div className={classes.container} style={{display: 'flex', flexDirection: 'center'}}>
-      <Paper className={classes.mainPaper} elevation={3} style={{height: 500}}>
+    <div className={classes.container} style={{display: 'flex', flexDirection: 'column'}}>
+      <Paper className={classes.mainPaper} elevation={3} style={{height: '100%'}}>
         <CreateTag />
         <CreateLink tags={tags} />
+        <CreateList links={links} />
       </Paper>
-      <CreateList links={links}/>
+
 
 
     </div>
