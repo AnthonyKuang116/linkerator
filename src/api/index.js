@@ -5,7 +5,7 @@ const BASE = "https://localhost:5000";
 
 export async function getLinks() {
   try {
-    const { data } = await axios.get(`api/links`);
+    const { data } = await axios.get(`/api/links`);
 
     return data;
   } catch (error) {
@@ -25,3 +25,5 @@ export async function getLinkById(linkId) {
 export { default as createTag } from "./createTag";
 export { default as getTags } from "./getTags";
 export { default as createLink } from "./createLink";
+export { default as updateLinkClickCount } from "./updateLinkCount";
+export { default as deleteLink } from "./deleteLink";

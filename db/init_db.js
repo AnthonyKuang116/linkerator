@@ -4,17 +4,19 @@ const {
   createLink,
   getAllLinks,
   createTag,
-} = require('./index');
+  createLinktags,
+} = require("./index");
 
 async function buildTables() {
   try {
-    console.log("Connecting to client...")
+    console.log("Connecting to client...");
     client.connect();
-    console.log("Client connected!")
+    console.log("Client connected!");
 
     // drop tables in correct order
     console.log("Starting to drop tables...");
     await client.query(`
+      DROP TABLE IF EXISTS link_tags;
       DROP TABLE IF EXISTS links;
       DROP TABLE IF EXISTS tags;
     `);
@@ -43,12 +45,10 @@ async function buildTables() {
           UNIQUE("linkId", "tagId")
         );
 
-      `
-    )
-    console.log("Finished creating tables.")
-
+      `);
+    console.log("Finished creating tables.");
   } catch (error) {
-    console.log("Error in creating tables!")
+    console.log("Error in creating tables!");
     throw error;
   }
 }
@@ -57,12 +57,34 @@ async function populateInitialData() {
   try {
     // create useful starting data
     console.log("Starting to create links");
-    const tag1 = await createTag("First tag")
-    const tag2 = await createTag("Second tag")
-    const tag3 = await createTag("Third tag")
-    const firstLink = await createLink({link: 'https://youtube.com', clickCount: '123', comment: 'Best video site', dateShared: 'June 10, 2021', tagId: tag1.id})
-    const secondLink = await createLink({link: 'https://google.com', clickCount: '987', comment: 'Most used search engine', dateShared: 'June 11, 2021', tagId : tag2.id})
-    const thirdLink = await createLink({link: '//https://github.com', clickCount:'5', comment: 'Share projects here', dateShared: 'June 12, 2021', tagId: tag3.id})
+    const tag1 = await createTag("First tag");
+    const tag2 = await createTag("Second tag");
+    const tag3 = await createTag("Third tag");
+    const firstLink = await createLink({
+      link: "https://youtube.com",
+      clickCount: "123",
+      comment: "Best video site",
+      dateShared: "June 10, 2021",
+      //tagId: tag1.id,
+    });
+    const secondLink = await createLink({
+      link: "https://google.com",
+      clickCount: "987",
+      comment: "Most used search engine",
+      dateShared: "June 11, 2021",
+      //tagId: tag2.id,
+    });
+    const thirdLink = await createLink({
+      link: "//https://github.com",
+      clickCount: "5",
+      comment: "Share projects here",
+      dateShared: "June 12, 2021",
+      //tagId: tag3.id,
+    });
+
+    createLinktags(firstLink.id, tag1.id);
+    createLinktags(secondLink.id, tag2.id);
+    createLinktags(thirdLink.id, tag3.id);
 
     console.log(firstLink, secondLink, thirdLink);
     console.log("Finished creating links!");
@@ -72,7 +94,7 @@ async function populateInitialData() {
   }
 }
 
-async function testDb(){
+async function testDb() {
   try {
     console.log("Starting to test database...");
     console.log("Calling getAllLinks..");
@@ -82,7 +104,6 @@ async function testDb(){
     console.log("Error during testDb");
     throw error;
   }
-
 }
 
 buildTables()

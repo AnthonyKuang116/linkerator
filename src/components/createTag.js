@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateTag = () => {
+const CreateTag = ({ setTags }) => {
   const [message, setMessage] = useState("");
   const [tagName, setTagName] = useState("");
   const [links, setLinks] = useState([]);
@@ -60,6 +60,7 @@ const CreateTag = () => {
         return;
       }
       const newTag = await createTag(tagName);
+
       console.log(newTag);
     } catch (error) {
       console.log(error);
@@ -70,6 +71,12 @@ const CreateTag = () => {
     e.preventDefaut();
     try {
       const newTag = await createTag(tagName);
+
+      setTags((existingTags) => [
+        { id: newTag.id, tagName: newTag.name, links: [] },
+        ...existingTags,
+      ]);
+
       console.log(newTag);
     } catch (error) {
       console.log(error);

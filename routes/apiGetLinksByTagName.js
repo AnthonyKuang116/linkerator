@@ -2,7 +2,7 @@ const { getLinksByTagName } = require("../db/index");
 
 const apiGetLinksByTagName = async (req, res, next) => {
   const tagname = req.params;
-  console.log(tagname);
+
   try {
     const tags = await getLinksByTagName(tagname);
     res.send(tags);

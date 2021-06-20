@@ -5,11 +5,10 @@ const DB_URL =
   process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
 const client = new Client(DB_URL);
 const tagArrayToObject = require("./tagArrayToObject");
-
+const linkArrayToObject = require("./linkArrayToObject");
 // database methods
-async function createLink({ link, comment}) {
+async function createLink({ link, comment }) {
   try {
-    console.log({ link, clickCount, comment, dateShared, tagId });
     const {
       rows: [links],
     } = await client.query(
@@ -31,9 +30,9 @@ async function createLink({ link, comment}) {
 async function getAllLinks() {
   try {
     const { rows: links } = await client.query(`
-      SELECT *
-      FROM links`);
-    return links;
+    SELECT c.id "tagId" , c.name "tagName", a.id ,a.link, a."clickCount",a.comment,a."dateShared"
+    FROM links a LEFT JOIN link_tags b on a."id"=b."linkId" LEFT JOIN tags c on c.id=b."tagId"`);
+    return linkArrayToObject(links);
   } catch (error) {
     console.error("getAllLinks", error);
     throw error;
@@ -57,15 +56,38 @@ async function getLink(linkId) {
     throw error;
   }
 }
+async function deleteLinkTags(linkId) {
+  try {
+    const {
+      rows: [linkTags],
+    } = await client.query(
+      `
+      DELETE FROM link_tags
+      where "linkId"=$1;
+    `,
+      [linkId]
+    );
+  } catch (error) {
+    console.error("deleteLinkTags", error);
+    throw error;
+  }
+}
 
 async function deleteLink(linkId) {
   try {
-    const { rows: [link] } = await client.query(`
+    await deleteLinkTags(linkId);
+
+    const {
+      rows: [link],
+    } = await client.query(
+      `
       DELETE FROM links
       where id=$1;
-    `, [linkId])
+    `,
+      [linkId]
+    );
 
-    return getAllLinks();
+    return await getAllLinks();
   } catch (error) {
     console.error("deleteLink", error);
     throw error;
@@ -74,11 +96,14 @@ async function deleteLink(linkId) {
 
 async function updateLink(linkId) {
   try {
-    await client.query(`
+    await client.query(
+      `
       UPDATE links
       SET "clickCount" = links."clickCount" + 1
       WHERE id=$1;
-    `, [linkId])
+    `,
+      [linkId]
+    );
 
     return await getAllLinks();
   } catch (error) {
@@ -109,17 +134,21 @@ async function createTag(name) {
 
 async function findOrCreateTag(name) {
   try {
-    const { rows: [tag] } = await client.query(`
+    const {
+      rows: [tag],
+    } = await client.query(
+      `
       SELECT * FROM tags
       WHERE name=$1;
-    `, [name])
+    `,
+      [name]
+    );
 
-    if(tag){
+    if (tag) {
       return tag;
     }
 
     return createTag(name);
-
   } catch (error) {
     console.error("findOrCreateTag", error);
     throw error;
@@ -129,8 +158,9 @@ async function findOrCreateTag(name) {
 async function getAllTags() {
   try {
     const { rows: tags } = await client.query(`
-      SELECT a.id , a.name "tagName", b.id "linkId",b.link, b."clickCount",b.comment,b."dateShared"
-      FROM tags a LEFT JOIN links b on a."id"=b."tagId"`);
+      SELECT a.id , a.name "tagName", c.id "linkId",c.link, c."clickCount",c.comment,c."dateShared"
+      FROM tags a LEFT JOIN link_tags b on a."id"=b."tagId" LEFT JOIN links c on c.id=b."linkId" `);
+    console.log(tags);
     return tagArrayToObject(tags);
   } catch (error) {
     console.error("getAllTags", error);
@@ -142,10 +172,9 @@ async function getLinksByTagName({ tagname: name }) {
   try {
     const { rows: tags } = await client.query(
       `
-
-    SELECT a.id, a.name, b.id "linkId", b.link,b."clickCount",b.comment,b."dateShared"
-    FROM tags a JOIN links b ON a.id=b."tagId"
-    WHERE a.name=$1
+      SELECT a.id , a.name "tagName",  c.id "linkId",c.link, c."clickCount",c.comment,c."dateShared"
+      FROM tags a LEFT JOIN link_tags b on a."id"=b."tagId" LEFT JOIN links c on c.id=b."linkId" 
+      WHERE a.name=$1
     `,
       [name]
     );
@@ -157,17 +186,34 @@ async function getLinksByTagName({ tagname: name }) {
     throw error;
   }
 }
+async function createLinktags(linkId, tagId) {
+  try {
+    console.log(linkId, tagId);
+    const {
+      rows: [tagLink],
+    } = await client.query(
+      `INSERT INTO link_tags("linkId","tagId")
+        VALUES ($1,$2)
+        RETURNING * ;`,
+      [linkId, tagId]
+    );
+    return tagLink;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // export
 module.exports = {
   client,
   createLink,
   createTag,
+  createLinktags,
   deleteLink,
   findOrCreateTag,
   getAllLinks,
   getAllTags,
   getLinksByTagName,
   getLink,
-  updateLink
+  updateLink,
 };

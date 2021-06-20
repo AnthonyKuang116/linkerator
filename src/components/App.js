@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
-import { getLinks, getTags } from "../api";
+
+import { getLinks, getTags, updateLinkClickCount, deleteLink } from "../api";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-
-import { CreateTag, CreateLink } from "./";
+import { CreateLink, Search, ShowLinks } from "./";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -19,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateRows: "repeat(10, 1fr)",
   },
   mainPaper: {
-    width: "70%",
+    width: "80%",
+    height: "99vh",
     margin: "0 auto",
     gridColumn: "2/9",
     gridRow: "1/-1",
@@ -40,13 +34,14 @@ const App = () => {
   const [tagName, setTagName] = useState("");
   const [links, setLinks] = useState([]);
   const [tags, setTags] = useState([]);
+  const [currentSearchText, setCurrentSearchText] = useState("");
 
   const classes = useStyles();
 
   useEffect(() => {
     getLinks()
-      .then(({ allLinks }) => {
-        setLinks(allLinks);
+      .then((response) => {
+        setLinks(response.allLinks);
       })
       .catch((error) => {
         setMessage(error.message);
@@ -63,11 +58,66 @@ const App = () => {
       });
   }, []);
 
+  const handleLinkClick = (id) => {
+    try {
+      updateLinkClickCount(id)
+        .then((response) => {
+          setLinks(response.update);
+        })
+        .catch((error) => {
+          throw Error(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSearchTextChanged = (name) => {
+    setCurrentSearchText(name);
+  };
+
+  const handleLinkDelete = (link) => {
+    deleteLink(link.id)
+      .then((response) => setLinks(response.removeLink))
+      .catch((error) => console.log(error));
+  };
+
+  const handleSearchTextChange = (e) => {
+    setCurrentSearchText(e.currentTarget.value);
+  };
+  const getRowData = () => {
+    let linksRows = [];
+    if (currentSearchText) {
+      links.forEach((link) => {
+        let tempArray = link.tags.filter((tag) => {
+          return tag.name?.includes(currentSearchText);
+        });
+
+        if (tempArray?.length > 0) {
+          linksRows.push(link);
+        }
+      });
+      return linksRows;
+    }
+    return links;
+  };
   return (
     <div className={classes.container}>
       <Paper className={classes.mainPaper} elevation={3}>
-        <CreateTag />
-        <CreateLink tags={tags} />
+        {/* <CreateTag setTags={setTags} /> */}
+        <CreateLink tags={tags} />{" "}
+        <Search
+          currentSearchText={currentSearchText}
+          handleSearchTextChange={handleSearchTextChange}
+        />
+        <ShowLinks
+          rows={getRowData()}
+          handleLinkClick={handleLinkClick}
+          setCurrentSearchText={setCurrentSearchText}
+          currentSearchText={currentSearchText}
+          handleSearchTextChanged={handleSearchTextChanged}
+          handleLinkDelete={handleLinkDelete}
+        />
       </Paper>
     </div>
   );
