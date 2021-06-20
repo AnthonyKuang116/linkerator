@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getLinks } from "../api";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
 import { createTag } from "../api";
@@ -21,11 +20,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fefae0ff",
     justifyContent: "space-around",
 
-    // "& > *": {
-    //   margin: theme.spacing(1),
-    //   width: theme.spacing(100),
-    //   height: theme.spacing(100),
-    // },
   },
   textField: {
     margin: "0",

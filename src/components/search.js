@@ -2,14 +2,13 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 const useStyles = makeStyles((theme) => ({
   root: {
     gridRow: "3/4",
-    gridColumn: "2/10",
+    gridColumn: "3/9",
     width: "100%",
     backgroundColor: "#fefae0ff",
     display: "flex",
@@ -20,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%",
     paddingTop: "1.5rem",
+    border: "2px solid #d4a373ff",
   },
   formControl: {
     margin: theme.spacing(1),
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = ({ currentSearchText, handleSearchTextChange }) => {
+const Search = ({ currentSearchText, handleSearchTextChange, searchOptionChange, currentOption }) => {
   const classes = useStyles();
 
   return (
@@ -46,12 +46,11 @@ const Search = ({ currentSearchText, handleSearchTextChange }) => {
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
-            value={1}
+            value={currentOption}
+            onChange={(event) => searchOptionChange(event)}
           >
-            <MenuItem value=""></MenuItem>
-            <MenuItem value={10}></MenuItem>
-            <MenuItem value={1}>By Link</MenuItem>
-            <MenuItem value={2}>By Tag</MenuItem>
+            <MenuItem value={0}>By Link</MenuItem>
+            <MenuItem value={1}>By Tag</MenuItem>
           </Select>
         </FormControl>
 

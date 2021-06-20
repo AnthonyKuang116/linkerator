@@ -75,7 +75,7 @@ async function populateInitialData() {
       //tagId: tag2.id,
     });
     const thirdLink = await createLink({
-      link: "//https://github.com",
+      link: "https://github.com",
       clickCount: "5",
       comment: "Share projects here",
       dateShared: "June 12, 2021",

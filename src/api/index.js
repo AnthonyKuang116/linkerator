@@ -1,7 +1,4 @@
 import axios from "axios";
-import GetTags from "./getTags";
-
-const BASE = "https://localhost:5000";
 
 export async function getLinks() {
   try {

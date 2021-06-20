@@ -13,7 +13,6 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -102,11 +101,8 @@ const headCells = [
 function EnhancedTableHead(props) {
   const {
     classes,
-    onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
     onRequestSort,
   } = props;
   const createSortHandler = (property) => (event) => {
@@ -229,7 +225,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "90%",
     margin: "0 auto",
-    gridRow: "4/-1",
+    gridRow: "4/11",
     gridColumn: "1/-1",
     justifySelf: "right",
     maxHeight: "20vh",
@@ -238,6 +234,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginBottom: theme.spacing(2),
     backgroundColor: "#fefae0ff",
+    border: "2px solid #d4a373ff",
+    flexGrow: "1",
   },
   table: {
     minWidth: 750,
@@ -251,7 +249,6 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     position: "absolute",
     top: 20,
-    width: 1,
   },
 }));
 
@@ -284,26 +281,6 @@ function ShowLinks({
       return;
     }
     setSelected([]);
-  };
-
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -374,6 +351,7 @@ function ShowLinks({
                         <a
                           href={row.link}
                           target="_blank"
+                          rel="noopener noreferrer"
                           onClick={() => handleLinkClick(row.id)}
                         >
                           {row.link}
@@ -408,7 +386,8 @@ function ShowLinks({
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5]}
+          rowsPerPage="5"
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
