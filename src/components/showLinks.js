@@ -90,6 +90,13 @@ const headCells = [
     label: "Tags",
     disableSorting: true,
   },
+  {
+    id: "delete",
+    numeric: false,
+    disablePadding: false,
+    label: "Delete",
+    disableSorting: true,
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -280,7 +287,6 @@ function ShowLinks({
   };
 
   const handleClick = (event, id) => {
-    console.log(event);
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
@@ -317,10 +323,6 @@ function ShowLinks({
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
-  const handleMouseClick = (row) => {
-    console.log(row);
-  };
 
   return (
     <div className={classes.root}>
@@ -378,12 +380,7 @@ function ShowLinks({
                         </a>
                       </TableCell>
                       <TableCell align="center">{row.clickCount}</TableCell>
-                      <TableCell
-                        align="left"
-                        onClick={() => handleMouseClick(row)}
-                      >
-                        {row.comment}
-                      </TableCell>
+                      <TableCell align="left">{row.comment}</TableCell>
                       <TableCell align="left">{row.dateShared}</TableCell>
                       <TableCell align="left">
                         {row?.tags?.map((tag) => (

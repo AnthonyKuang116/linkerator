@@ -41,7 +41,6 @@ const App = () => {
   useEffect(() => {
     getLinks()
       .then((response) => {
-        console.log(response);
         setLinks(response.allLinks);
       })
       .catch((error) => {
@@ -83,15 +82,17 @@ const App = () => {
       .catch((error) => console.log(error));
   };
 
+  const handleSearchTextChange = (e) => {
+    setCurrentSearchText(e.currentTarget.value);
+  };
   const getRowData = () => {
-    console.log(links);
     let linksRows = [];
     if (currentSearchText) {
       links.forEach((link) => {
         let tempArray = link.tags.filter((tag) => {
           return tag.name?.includes(currentSearchText);
         });
-        console.log(tempArray);
+
         if (tempArray?.length > 0) {
           linksRows.push(link);
         }
@@ -105,7 +106,10 @@ const App = () => {
       <Paper className={classes.mainPaper} elevation={3}>
         {/* <CreateTag setTags={setTags} /> */}
         <CreateLink tags={tags} />{" "}
-        <Search currentSearchText={currentSearchText} />
+        <Search
+          currentSearchText={currentSearchText}
+          handleSearchTextChange={handleSearchTextChange}
+        />
         <ShowLinks
           rows={getRowData()}
           handleLinkClick={handleLinkClick}

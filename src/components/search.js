@@ -33,12 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = (props) => {
-  const { currentSearchText } = props;
+const Search = ({ currentSearchText, handleSearchTextChange }) => {
   const classes = useStyles();
-  const handleChange = (e) => {
-    console.log(e.target.value);
-  };
+
   return (
     <div className={classes.root}>
       <form className={classes.form} noValidate autoComplete="off">
@@ -50,7 +47,6 @@ const Search = (props) => {
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             value={1}
-            onChange={handleChange}
           >
             <MenuItem value=""></MenuItem>
             <MenuItem value={10}></MenuItem>
@@ -65,6 +61,7 @@ const Search = (props) => {
           label="Type your search text here."
           variant="filled"
           value={currentSearchText}
+          onChange={(e) => handleSearchTextChange(e)}
         />
       </form>
     </div>
