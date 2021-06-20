@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     marginTop: "20px",
     marginLeft: "10px",
+    marginBottom: "10px",
     fontWeight: "bolder",
   },
 }));
