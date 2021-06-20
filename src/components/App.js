@@ -117,7 +117,11 @@ const App = () => {
   return (
     <div className={classes.container}>
       <Paper className={classes.mainPaper} elevation={3}>
+<<<<<<< HEAD
         <div style={{ gridColumn: "2/10", gridRow: "1/2", justifyContent: "center", display: "flex", fontFamily: "fantasy" }}><h1 style={{textDecoration: "underline", color: "#0040ff"}}>The Great Linkerator</h1></div>
+=======
+        <CreateLink setLinks={setLinks} />
+>>>>>>> ui-additions
         <Search
           currentSearchText={currentSearchText}
           handleSearchTextChange={handleSearchTextChange}

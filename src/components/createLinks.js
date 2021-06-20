@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateLink = () => {
+const CreateLink = ({ setLinks }) => {
   const classes = useStyles();
   const [link, setLink] = useState("");
   const [newTags, setNewTags] = useState([]);
@@ -59,11 +59,15 @@ const CreateLink = () => {
   const tagRef = useRef(null);
   const [popOverMst, setPopOverMsg] = useState("");
 
+<<<<<<< HEAD
   const handleFormSubmit = async (e) => {
     console.log(e.target.value);
   };
 
   const handleLinkCreateClick = async (e) => {
+=======
+  const handleLinkCreateClick = (e) => {
+>>>>>>> ui-additions
     if (!link) {
       setAnchorEl(linkRef.current);
       setPopOverMsg("Link field can not be empty.");
@@ -82,6 +86,8 @@ const CreateLink = () => {
         setCreateMessage("Link created successfuly!");
         setLink("");
         setNewTags([]);
+        setComment("");
+        setLinks((links) => [response.newLink, ...links]);
       })
       .catch((error) => setCreateMessage(error.message));
   };
@@ -109,12 +115,7 @@ const CreateLink = () => {
   const id = open ? anchorEl : undefined;
   return (
     <>
-      <form
-        onSubmit={handleFormSubmit}
-        className={classes.form}
-        validate
-        autoComplete="off"
-      >
+      <form className={classes.form} validate autoComplete="off">
         <Typography variant="h5" gutterBottom className={classes.typography}>
           Create a new Link:
         </Typography>
