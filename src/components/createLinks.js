@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     margin: theme.spacing(1),
     color: "#ccd5aeff",
-    width: "90%",
+    width: "60rem",
   },
   formControl: {
     margin: theme.spacing(1),
@@ -107,18 +107,19 @@ const CreateLink = ({ setLinks }) => {
   const id = open ? anchorEl : undefined;
   return (
     <>
-      <form className={classes.form} validate autoComplete="off">
+      <form className={classes.form} novalidate autoComplete="off">
         <Typography variant="h5" gutterBottom className={classes.typography}>
           Create a new Link:
         </Typography>
 
         <TextField
           className={classes.textField}
-          id="txt-link"
+          id="standard-basic"
           label="Link"
           onChange={handleLinkChange}
           value={link}
           ref={linkRef}
+          variant="outlined"
         />
 
         <TextField
@@ -127,6 +128,7 @@ const CreateLink = ({ setLinks }) => {
           label="Link Comment"
           onChange={handCommentChange}
           value={comment}
+          variant="outlined"
         />
 
         <TextField
@@ -136,6 +138,7 @@ const CreateLink = ({ setLinks }) => {
           onChange={handTagsChange}
           value={newTags.join(",")}
           ref={tagRef}
+          variant="outlined"
         />
 
         <Button
