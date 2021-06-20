@@ -29,11 +29,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   textFieldStyle: {
-    width: "30rem",
+    width: "50rem",
   },
 }));
 
-const Search = ({ currentSearchText, handleSearchTextChange, searchOptionChange, currentOption }) => {
+const Search = ({
+  currentSearchText,
+  handleSearchTextChange,
+  searchOptionChange,
+  currentOption,
+}) => {
   const classes = useStyles();
 
   return (
