@@ -59,15 +59,7 @@ const CreateLink = ({ setLinks }) => {
   const tagRef = useRef(null);
   const [popOverMst, setPopOverMsg] = useState("");
 
-<<<<<<< HEAD
-  const handleFormSubmit = async (e) => {
-    console.log(e.target.value);
-  };
-
-  const handleLinkCreateClick = async (e) => {
-=======
   const handleLinkCreateClick = (e) => {
->>>>>>> ui-additions
     if (!link) {
       setAnchorEl(linkRef.current);
       setPopOverMsg("Link field can not be empty.");
