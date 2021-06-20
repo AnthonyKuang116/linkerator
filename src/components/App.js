@@ -104,8 +104,7 @@ const App = () => {
   return (
     <div className={classes.container}>
       <Paper className={classes.mainPaper} elevation={3}>
-        {/* <CreateTag setTags={setTags} /> */}
-        <CreateLink tags={tags} />{" "}
+        <CreateLink setLinks={setLinks} />
         <Search
           currentSearchText={currentSearchText}
           handleSearchTextChange={handleSearchTextChange}
