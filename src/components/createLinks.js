@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 115,
+    minWidth: "50rem",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     marginTop: "20px",
     marginLeft: "10px",
-    marginBottom: "10px",
+    marginBottom: "2px",
     fontWeight: "bolder",
   },
 }));
@@ -107,18 +107,18 @@ const CreateLink = ({ setLinks }) => {
   const id = open ? anchorEl : undefined;
   return (
     <>
-      <form className={classes.form} novalidate autoComplete="off">
+      <form className={classes.form}>
         <Typography variant="h5" gutterBottom className={classes.typography}>
           Create a new Link:
         </Typography>
 
         <TextField
           className={classes.textField}
-          id="standard-basic"
-          label="Link"
           onChange={handleLinkChange}
           value={link}
           ref={linkRef}
+          id="txt-link"
+          label="Link"
           variant="outlined"
         />
 

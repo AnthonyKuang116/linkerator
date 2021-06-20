@@ -130,7 +130,6 @@ const App = () => {
           handleSearchTextChanged={handleSearchTextChanged}
           handleLinkDelete={handleLinkDelete}
         />
-        <CreateLink tags={tags} />{" "}
       </Paper>
     </div>
   );
