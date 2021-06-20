@@ -47,6 +47,7 @@ const Search = ({ currentSearchText, handleSearchTextChange }) => {
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             value={1}
+            onChange={(e) => console.log(e.target.value)}
           >
             <MenuItem value=""></MenuItem>
             <MenuItem value={10}></MenuItem>
