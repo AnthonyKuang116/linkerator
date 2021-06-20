@@ -4,7 +4,6 @@ import { getLinks, getTags, updateLinkClickCount, deleteLink } from "../api";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { CreateLink, Search, ShowLinks } from "./";
-import { response } from "express";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -80,7 +79,7 @@ const App = () => {
 
   const handleLinkDelete = (link) => {
     deleteLink(link.id)
-      .then((response) => console.log(response))
+      .then((response) => setLinks(response.removeLink))
       .catch((error) => console.log(error));
   };
 
