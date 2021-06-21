@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     margin: theme.spacing(1),
     color: "#ccd5aeff",
-    width: "60rem",
+    width: "90%",
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: "50rem",
+    minWidth: "115",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),

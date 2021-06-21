@@ -42,7 +42,7 @@ const App = () => {
         console.log(message);
         setMessage(error.message);
       });
-  }, [links]);
+  }, []);
 
   useEffect(() => {
     getTags()
@@ -94,7 +94,6 @@ const App = () => {
           link.link.includes(currentSearchText)
         );
       }
-      console.log(linksRows);
       return linksRows;
     } else {
       if (currentSearchText) {
@@ -115,6 +114,7 @@ const App = () => {
   return (
     <div className={classes.container}>
       <Paper className={classes.mainPaper} elevation={3}>
+        <div style={{ gridColumn: "2/10", gridRow: "1/2", justifyContent: "center", display: "flex", fontFamily: "fantasy" }}><h1 style={{ textDecoration: "underline", color: "#0040ff" }}>The Great Linkerator</h1></div>
         <CreateLink setLinks={setLinks} />
         <Search
           currentSearchText={currentSearchText}

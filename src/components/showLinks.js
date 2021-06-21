@@ -13,6 +13,7 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Button from '@material-ui/core/Button';
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -370,9 +371,9 @@ function ShowLinks({
                         ))}
                       </TableCell>
                       <TableCell align="left">
-                        <button onClick={() => handleLinkDelete(row)}>
+                        <Button variant="contained" color="secondary" onClick={() => handleLinkDelete(row)}>
                           delete
-                        </button>
+                        </Button>
                       </TableCell>
                     </TableRow>
                   );

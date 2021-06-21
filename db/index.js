@@ -4,13 +4,7 @@ const { Client } = require("pg");
 const DB_NAME = "boilerplate-dev";
 const DB_URL =
   process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
-const client = new Client({
-  DB_URL,
-  ssl:
-    process.env.NODE_ENV === "production"
-      ? { rejectUnauthorized: false }
-      : undefined,
-});
+const client = new Client(DB_URL);
 const tagArrayToObject = require("./tagArrayToObject");
 const linkArrayToObject = require("./linkArrayToObject");
 // database methods
