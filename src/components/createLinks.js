@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     margin: theme.spacing(1),
     color: "#ccd5aeff",
-    width: "90%",
+    width: "60rem",
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 115,
+    minWidth: "50rem",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -43,11 +43,12 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     marginTop: "20px",
     marginLeft: "10px",
+    marginBottom: "2px",
     fontWeight: "bolder",
   },
 }));
 
-const CreateLink = () => {
+const CreateLink = ({ setLinks }) => {
   const classes = useStyles();
   const [link, setLink] = useState("");
   const [newTags, setNewTags] = useState([]);
@@ -58,11 +59,7 @@ const CreateLink = () => {
   const tagRef = useRef(null);
   const [popOverMst, setPopOverMsg] = useState("");
 
-  const handleFormSubmit = async (e) => {
-    console.log(e.target.value);
-  };
-
-  const handleLinkCreateClick = async (e) => {
+  const handleLinkCreateClick = (e) => {
     if (!link) {
       setAnchorEl(linkRef.current);
       setPopOverMsg("Link field can not be empty.");
@@ -81,6 +78,8 @@ const CreateLink = () => {
         setCreateMessage("Link created successfuly!");
         setLink("");
         setNewTags([]);
+        setComment("");
+        setLinks((links) => [response.newLink, ...links]);
       })
       .catch((error) => setCreateMessage(error.message));
   };
@@ -108,23 +107,19 @@ const CreateLink = () => {
   const id = open ? anchorEl : undefined;
   return (
     <>
-      <form
-        onSubmit={handleFormSubmit}
-        className={classes.form}
-        validate
-        autoComplete="off"
-      >
+      <form className={classes.form}>
         <Typography variant="h5" gutterBottom className={classes.typography}>
           Create a new Link:
         </Typography>
 
         <TextField
           className={classes.textField}
-          id="txt-link"
-          label="Link"
           onChange={handleLinkChange}
           value={link}
           ref={linkRef}
+          id="txt-link"
+          label="Link"
+          variant="outlined"
         />
 
         <TextField
@@ -133,6 +128,7 @@ const CreateLink = () => {
           label="Link Comment"
           onChange={handCommentChange}
           value={comment}
+          variant="outlined"
         />
 
         <TextField
@@ -142,6 +138,7 @@ const CreateLink = () => {
           onChange={handTagsChange}
           value={newTags.join(",")}
           ref={tagRef}
+          variant="outlined"
         />
 
         <Button

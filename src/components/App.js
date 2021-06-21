@@ -70,8 +70,8 @@ const App = () => {
 
   const searchOptionChange = (event) => {
     setCurrentOption(event.target.value);
-    console.log(event.target.value)
-  }
+    console.log(event.target.value);
+  };
 
   const handleSearchTextChanged = (name) => {
     setCurrentSearchText(name);
@@ -93,11 +93,10 @@ const App = () => {
         linksRows = links.filter((link) =>
           link.link.includes(currentSearchText)
         );
-      };
-      console.log(linksRows)
+      }
+      console.log(linksRows);
       return linksRows;
-    }
-    else {
+    } else {
       if (currentSearchText) {
         links.forEach((link) => {
           let tempArray = link.tags.filter((tag) => {
@@ -110,14 +109,13 @@ const App = () => {
         });
         return linksRows;
       }
-
     }
     return links;
   };
   return (
     <div className={classes.container}>
       <Paper className={classes.mainPaper} elevation={3}>
-        <div style={{ gridColumn: "2/10", gridRow: "1/2", justifyContent: "center", display: "flex", fontFamily: "fantasy" }}><h1 style={{textDecoration: "underline", color: "#0040ff"}}>The Great Linkerator</h1></div>
+        <CreateLink setLinks={setLinks} />
         <Search
           currentSearchText={currentSearchText}
           handleSearchTextChange={handleSearchTextChange}
@@ -132,7 +130,6 @@ const App = () => {
           handleSearchTextChanged={handleSearchTextChanged}
           handleLinkDelete={handleLinkDelete}
         />
-        <CreateLink tags={tags} />{" "}
       </Paper>
     </div>
   );
